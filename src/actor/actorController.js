@@ -3,7 +3,7 @@ import client from "../common/db.js";
 import { Actor } from "./actor.js";
 import e from "express";
 
-const actorCollection = client.db('cine-db').collection('peliculas')
+const actorCollection = client.db('cine-db').collection('actores')
 
 async function handleInsertActorRequest(req, res) {
     let data = req.body;
@@ -16,9 +16,9 @@ async function handleInsertActorRequest(req, res) {
     actor.premios = data.premios;
   
     try {
-      const pelicula = await client.db("cine-db").collection("actores").findOne({ nombre: data.idPelicula }); 
+      const pelicula = await client.db("cine-db").collection("peliculas").findOne({ nombre: data.idPelicula }); 
       if (!pelicula) {
-        return res.status(400).send('¡Lo sentimos! El actor no existe');
+        return res.status(400).send('¡Lo sentimos! La película no existe');
       }
   
       await actorCollection.insertOne(actor) 
@@ -71,7 +71,6 @@ async function handleGetActoresByPeliculaIdRequest(req, res) {
     let id = req.params.id; 
   
     try {
-      let oid = ObjectId.createFromHexString(id); 
   
       await actorCollection.find({ idPelicula: id }).toArray() 
         .then((data) => {
@@ -95,7 +94,3 @@ export default {
     handleGetActoresByPeliculaIdRequest,
 }
 
-// Al igual que en el archivo de controlador de pelicula, a este archivo le cambié el nombre 
-// para no confundirlo. Pero, de nuevo, no sé si hice bien, porque en routes.js mantuve el 
-// mismo nombre, tan solo separados por las carpetas. Me quedé con la duda sobre esto, le 
-// agradecería mucho si pudiera sacarme de dudas en la revisión. 

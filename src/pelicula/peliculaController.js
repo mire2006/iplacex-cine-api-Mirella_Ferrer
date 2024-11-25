@@ -102,5 +102,3 @@ export default {
     handleUpdatePeliculaByIdRequest, 
     handleDeletePeliculaByIdRequest,
 }
-
-// Profesor, le cambié el nombre al archivo para no confundirlo con el de la carpeta actor, no sé si hice bien.
