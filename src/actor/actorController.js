@@ -16,9 +16,9 @@ async function handleInsertActorRequest(req, res) {
     actor.premios = data.premios;
   
     try {
-      const pelicula = await client.db("cine-db").collection("peliculas").findOne({ nombre: data.idPelicula }); 
+      const pelicula = await client.db("cine-db").collection("actores").findOne({ nombre: data.idPelicula }); 
       if (!pelicula) {
-        return res.status(400).send('¡Lo sentimos! La película no existe');
+        return res.status(400).send('¡Lo sentimos! El actor no existe');
       }
   
       await actorCollection.insertOne(actor) 
